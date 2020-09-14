@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.member.mapper.MemberMapper">
+
+	<select id="memberList" resultType="com.hk.member.dto.MemberVO">
+		select * from members
+	</select>
+
+	<insert id="memberAdd"> <!-- c -->
+
+		insert into members (mno,email,mname,pwd,cre_date,mod_date) values
+		(member_seq.nextval, #{email}, #{mname}, #{pwd}, sysdate, sysdate)
+
+	</insert>
+
+	<select id="memberGetOne"
+		resultType="com.hk.member.dto.MemberVO" parameterType="int">
+
+		select * from members where mno = #{mno} <!-- R -->
+
+	</select>
+
+	<update id="memberUpdate"> <!-- U -->
+
+		update members
+		set email = #{email},
+		pwd = #{pwd},
+		mname = #{mname},
+		mod_date = sysdate
+		where mno = #{mno}
+
+	</update>
+
+	<delete id="memberDelete"> <!-- D -->
+
+		delete members where mno = #{mno} <!-- 질문하기 -->
+
+	</delete>
+
+	<select id="memberLogin" resultType="com.hk.member.dto.MemberVO">
+
+		select * from members where email = #{email} and pwd = #{pwd}
+	</select>
+	
+	<select id="checkIdDup" resultType="com.hk.member.dto.MemberVO">
+	
+	select * from members where email = #{email}
+	</select>
+
+
+
+</mapper>
